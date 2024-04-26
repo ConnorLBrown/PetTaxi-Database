@@ -26,3 +26,117 @@ What to turn in:
 4.) Execute a DESCRIBE command on each of your tables and copy and past the result into the assignment or into a document you upload.
 
 5.) Do the same for 2-3 join queries that you developed in #3. Submit the query and the results
+
+
+RESULTS:
+
+mysql> describe owner;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| cid  | int         | NO   | PRI | NULL    | auto_increment |
+| fname     | varchar(50) | YES  |     | NULL    |                |
+| lname     | varchar(50) | YES  |     | NULL    |                |
+| DOB       | date        | YES  |     | NULL    |                |
+| phone_num | varchar(15) | YES  |     | NULL    |                |
+| address   | varchar(50) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+6 rows in set (0.03 sec)
+
+mysql> describe drivers;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| did | int         | NO   | PRI | NULL    | auto_increment |
+| fname    | varchar(50) | YES  |     | NULL    |                |
+| lname    | varchar(50) | YES  |     | NULL    |                |
+| cartype  | varchar(50) | YES  |     | NULL    |                |
+| DOB      | date        | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe pettaxi;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| did | int  | NO   | PRI | NULL    |       |
+| aid | int  | NO   | PRI | NULL    |       |
++----------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> describe appointment;
++-----------------+-------------+------+-----+---------+----------------+
+| Field           | Type        | Null | Key | Default | Extra          |
++-----------------+-------------+------+-----+---------+----------------+
+| appid         | int         | NO   | PRI | NULL    | auto_increment |
+| cid       | int         | YES  | MUL | NULL    |                |
+| did        | int         | YES  | MUL | NULL    |                |
+| sid       | int         | YES  | MUL | NULL    |                |
+| appdate        | date        | YES  |     | NULL    |                |
+| location | varchar(30) | YES  |     | NULL    |                |
+| lengthmins      | int         | YES  |     | NULL    |                |
++-----------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+mysql> describe transaction;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| sid | int          | NO   | PRI | NULL    | auto_increment |
+| type      | varchar(50)  | YES  |     | NULL    |                |
+| price     | decimal(3,2) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> describe taxi;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| tid  | int         | NO   | PRI | NULL    | auto_increment |
+| model    | varchar(50) | YES  |     | NULL    |                |
+| year     | varchar(4)  | YES  |     | NULL    |                |
+| did | int         | YES  | MUL | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> describe animal;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| aid     | int         | NO   | PRI | NULL    | auto_increment |
+| breed | varchar(50) | YES  |     | NULL    |                |
+| name  | varchar(50) | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+
+ 
+
+ 
+
+ 
+
+mysql> select drivers.fname, drivers.lname, appointment.appdate, appointment.location from drivers inner join appointment on appointment.appid=drivers.did;
++--------+--------+------------+--------------------+
+| fname  | lname  | appdate   |   location    |
++--------+--------+------------+--------------------+
+| Donald  | Trump | 2023-03-15 |  1202 Florence Boulevard    |
+| Joe  | Biden  | 2023-03-10 | 332 MaryLee Drive |
+| Derek | Jeter   | 2023-03-05 | 336 Oak Street    |
++--------+--------+------------+--------------------+ 
+
+mysql> select owner.fname, owner.lname, appointment.appdate, appointment.location from owner inner join appointment on appointment.appid=owner.cid;
++---------+---------+------------+--------------------+
+| fname   | lname   | appdate   |  location    |
++---------+---------+------------+--------------------+
+| Connor    | Brown   | 2023-03-19 | 753 Nellie Avenue   |
+| Danny | McBride  | 2023-03-20 | 553 OakView Circle |
+| George   | Clooney| 2023-03-21 | 905 Rodeo Drive    |
++---------+---------+------------+--------------------+
+
+mysql> select owner.fname, owner.lname, animal.breed from owner inner join animal on animal.aid =owner.cid;
++---------+---------+---------------------+
+| fname   | lname   |   breed        |
++---------+---------+---------------------+
+| Connor    | Brown   | German Shepard   |
+| Danny |  McBride |  Bull mastiff     |
+| George    | Clooney | Pomeranian |
++---------+---------+---------------------+
